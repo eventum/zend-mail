@@ -14,7 +14,6 @@
     },
     "require": {
         "php": ">=5.3.23",
-        "zendframework/zend-crypt": "self.version",
         "zendframework/zend-loader": "self.version",
         "zendframework/zend-mime": "self.version",
         "zendframework/zend-stdlib": "self.version",
@@ -27,7 +26,8 @@
         "phpunit/PHPUnit": "~4.0"
     },
     "suggest": {
-        "zendframework/zend-servicemanager": "Zend\\ServiceManager component"
+        "zendframework/zend-servicemanager": "Zend\\ServiceManager component",
+        "zendframework/zend-crypt": "Crammd5 support in SMTP Auth"
     },
     "extra": {
         "branch-alias": {
