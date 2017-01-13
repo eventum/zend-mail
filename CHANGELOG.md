@@ -2,6 +2,46 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 2.4.11 - 2016-12-20
+
+### Added
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- Fixes the [ZF2016-04 advisory](https://framework.zend.com/security/advisory/ZF2016-04)
+  ("Potential remote code execution in zend-mail via Sendmail adapter").
+
+## 2.4.10 - 2016-05-09
+
+### Added
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- [#28](https://github.com/zendframework/zend-mail/pull/28) and
+  [#87](https://github.com/zendframework/zend-mail/pull/87) fix header value
+  validation when headers wrap using the sequence \r\n\t; prior to this release,
+  such sequences incorrectly marked a header value invalid.
+
 ## 2.4.8 - 2015-09-10
 
 ### Added
