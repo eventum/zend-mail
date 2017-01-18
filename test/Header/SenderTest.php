@@ -11,6 +11,8 @@ namespace ZendTest\Mail\Header;
 
 use Zend\Mail\Address;
 use Zend\Mail\Header;
+use Zend\Mail\Exception;
+
 
 /**
  * @group      Zend_Mail
@@ -202,6 +204,63 @@ class SenderTest extends \PHPUnit_Framework_TestCase
             'cr-lf' => array("<foo@bar>\r\n", $headerInvalidArgumentException, null),
             'cr-lf-wsp' => array("<foo@bar>\r\n\r\n", $headerInvalidArgumentException, null),
             'multiline' => array("<foo\r\n@\r\nbar>", $headerInvalidArgumentException, null),
+        );
+    }
+
+    /**
+     * @param string $headerString
+     * @param string $expectedName
+     * @param string $expectedEmail
+     *
+     * @dataProvider validHeaderLinesProvider
+     */
+    public function testFromStringWithValidInput($headerString, $expectedName, $expectedEmail)
+    {
+        $header = Header\Sender::fromString($headerString);
+
+        $this->assertSame($expectedName, $header->getAddress()->getName());
+        $this->assertSame($expectedEmail, $header->getAddress()->getEmail());
+    }
+
+    public function validHeaderLinesProvider()
+    {
+
+        return array(
+            // [ header line, expected sender name, expected email address ]
+            array('Sender: foo@bar', null, 'foo@bar'),
+            array('Sender: <foo@bar>', null, 'foo@bar'),
+            array('Sender:    foo@bar', null, 'foo@bar'),
+            array('Sender: name <foo@bar>', 'name', 'foo@bar'),
+            array('Sender: <weird name> <foo@bar>', '<weird name>', 'foo@bar'),
+            array('Sender: moar words <foo@bar>', 'moar words', 'foo@bar'),
+            array('Sender: =?UTF-8?Q?=C3=A1z=C3=81Z09?= <foo@bar>', 'ázÁZ09', 'foo@bar'),
+        );
+    }
+
+    /**
+     * @param string $headerString
+     * @param string $expectedException
+     * @param string $expectedMessagePart
+     *
+     * @dataProvider invalidHeaderLinesProvider
+     */
+    public function testFromStringWithInvalidInput($headerString, $expectedException, $expectedMessagePart = '')
+    {
+        $this->setExpectedException($expectedException, $expectedMessagePart);
+
+        Header\Sender::fromString($headerString);
+    }
+
+    public function invalidHeaderLinesProvider()
+    {
+        $mailInvalidArgumentException = 'Zend\Mail\Exception\InvalidArgumentException';
+        $headerInvalidArgumentException = 'Zend\Mail\Header\Exception\InvalidArgumentException';
+
+        return array(
+            array('Sender: foo', $mailInvalidArgumentException),
+            array('Sender: foo<foo>', $mailInvalidArgumentException),
+            array('Sender: foo foo', $headerInvalidArgumentException),
+            array('Sender: <foo> foo', $headerInvalidArgumentException),
         );
     }
 }
