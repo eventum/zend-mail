@@ -225,16 +225,16 @@ class SenderTest extends \PHPUnit_Framework_TestCase
     public function validHeaderLinesProvider()
     {
 
-        return [
+        return array(
             // [ header line, expected sender name, expected email address ]
-            ['Sender: foo@bar', null, 'foo@bar'],
-            ['Sender: <foo@bar>', null, 'foo@bar'],
-            ['Sender:    foo@bar', null, 'foo@bar'],
-            ['Sender: name <foo@bar>', 'name', 'foo@bar'],
-            ['Sender: <weird name> <foo@bar>', '<weird name>', 'foo@bar'],
-            ['Sender: moar words <foo@bar>', 'moar words', 'foo@bar'],
-            ['Sender: =?UTF-8?Q?=C3=A1z=C3=81Z09?= <foo@bar>', 'ázÁZ09', 'foo@bar'],
-        ];
+            array('Sender: foo@bar', null, 'foo@bar'),
+            array('Sender: <foo@bar>', null, 'foo@bar'),
+            array('Sender:    foo@bar', null, 'foo@bar'),
+            array('Sender: name <foo@bar>', 'name', 'foo@bar'),
+            array('Sender: <weird name> <foo@bar>', '<weird name>', 'foo@bar'),
+            array('Sender: moar words <foo@bar>', 'moar words', 'foo@bar'),
+            array('Sender: =?UTF-8?Q?=C3=A1z=C3=81Z09?= <foo@bar>', 'ázÁZ09', 'foo@bar'),
+        );
     }
 
     /**
@@ -253,14 +253,14 @@ class SenderTest extends \PHPUnit_Framework_TestCase
 
     public function invalidHeaderLinesProvider()
     {
-        $mailInvalidArgumentException = Exception\InvalidArgumentException::class;
-        $headerInvalidArgumentException = Header\Exception\InvalidArgumentException::class;
+        $mailInvalidArgumentException = 'Zend\Mail\Exception\InvalidArgumentException';
+        $headerInvalidArgumentException = 'Zend\Mail\Header\Exception\InvalidArgumentException';
 
-        return [
-            ['Sender: foo', $mailInvalidArgumentException],
-            ['Sender: foo<foo>', $mailInvalidArgumentException],
-            ['Sender: foo foo', $headerInvalidArgumentException],
-            ['Sender: <foo> foo', $headerInvalidArgumentException],
-        ];
+        return array(
+            array('Sender: foo', $mailInvalidArgumentException),
+            array('Sender: foo<foo>', $mailInvalidArgumentException),
+            array('Sender: foo foo', $headerInvalidArgumentException),
+            array('Sender: <foo> foo', $headerInvalidArgumentException),
+        );
     }
 }
