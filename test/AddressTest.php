@@ -78,9 +78,9 @@ class AddressTest extends \PHPUnit_Framework_TestCase
 
     public function validSenderDataProvider()
     {
-        return [
+        return array(
             // Description => [sender address, sender name],
-            'german IDN' => ['öäü@ä-umlaut.de', null],
-        ];
+            'german IDN' => array('öäü@ä-umlaut.de', null),
+        );
     }
 }
