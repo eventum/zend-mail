@@ -13,7 +13,6 @@ use Zend\Mail\Header;
 
 /**
  * @group      Zend_Mail
- * @covers \Zend\Mail\Header\MessageId<extended>
  */
 class MessageIdTest extends \PHPUnit_Framework_TestCase
 {

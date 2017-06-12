@@ -18,7 +18,6 @@ use Zend\Mime\Exception as MimeException;
 
 /**
  * @group      Zend_Mail
- * @covers \Zend\Mail\Storage\Message<extended>
  */
 class MessageTest extends \PHPUnit_Framework_TestCase
 {
@@ -124,6 +123,7 @@ class MessageTest extends \PHPUnit_Framework_TestCase
      * after pull/86 messageId gets double braces
      *
      * @see https://github.com/zendframework/zend-mail/pull/86
+     * @see https://github.com/zendframework/zend-mail/pull/156
      */
     public function testMessageIdHeader()
     {

@@ -27,7 +27,7 @@ class MessageId implements HeaderInterface
         }
 
         $header = new static();
-        $header->setId(trim($value, '<>'));
+        $header->setId($value);
 
         return $header;
     }
@@ -68,6 +68,8 @@ class MessageId implements HeaderInterface
     {
         if ($id === null) {
             $id = $this->createMessageId();
+        } else {
+            $id = trim($id, '<>');
         }
 
         if (! HeaderValue::isValid($id)
