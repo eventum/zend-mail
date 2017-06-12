@@ -27,7 +27,7 @@ class MessageId implements HeaderInterface
         }
 
         $header = new static();
-        $header->setId($value);
+        $header->setId(trim($value, '<>'));
 
         return $header;
     }

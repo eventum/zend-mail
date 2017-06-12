@@ -18,6 +18,7 @@ use Zend\Mime\Exception as MimeException;
 
 /**
  * @group      Zend_Mail
+ * @covers \Zend\Mail\Storage\Message<extended>
  */
 class MessageTest extends \PHPUnit_Framework_TestCase
 {
@@ -117,6 +118,18 @@ class MessageTest extends \PHPUnit_Framework_TestCase
         $message = new Message(array('raw' => $raw));
 
         $this->assertEquals(substr($message->getContent(), 0, 6), "\t<?php");
+    }
+
+    /**
+     * after pull/86 messageId gets double braces
+     *
+     * @see https://github.com/zendframework/zend-mail/pull/86
+     */
+    public function testMessageIdHeader()
+    {
+        $message = new Message(['file' => $this->file]);
+        $messageId = $message->messageId;
+        $this->assertEquals('<CALTvGe4_oYgf9WsYgauv7qXh2-6=KbPLExmJNG7fCs9B=1nOYg@mail.example.com>', $messageId);
     }
 
     public function testMultipleHeader()
