@@ -207,9 +207,6 @@ class Headers implements Countable, Iterator
     /**
      * Add a raw header line, either in name => value, or as a single string 'name: value'
      *
-     * This method allows for lazy-loading in that the parsing and instantiation of HeaderInterface object
-     * will be delayed until they are retrieved by either get() or current()
-     *
      * @throws Exception\InvalidArgumentException
      * @param  string $headerFieldNameOrLine
      * @param  string $fieldValue optional
@@ -238,7 +235,9 @@ class Headers implements Countable, Iterator
                 $this->addHeader(Header\GenericMultiHeader::fromString($headerFieldNameOrLine . ':' . $i));
             }
         } else {
-            $this->addHeader(Header\GenericHeader::fromString($headerFieldNameOrLine . ':' . $fieldValue));
+            $class = $this->getPluginClassLoader()->load($headerFieldNameOrLine) ?: Header\GenericHeader::class;
+            $header = $class::fromString($headerFieldNameOrLine . ':' . $fieldValue);
+            $this->addHeader($header);
         }
 
         return $this;
