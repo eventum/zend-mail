@@ -11,6 +11,7 @@ namespace ZendTest\Mail\Header;
 
 use Zend\Mail\Header\GenericHeader;
 use Zend\Mail\Header\HeaderWrap;
+use Zend\Mail\Storage;
 
 /**
  * @group      Zend_Mail
@@ -70,6 +71,26 @@ class HeaderWrapTest extends \PHPUnit_Framework_TestCase
         $decoded = HeaderWrap::mimeDecodeValue($encoded);
 
         $this->assertEquals($expected, $decoded);
+    }
+
+    /**
+     * Test that header lazy-loading doesn't break later header access
+     * because undocumented behavior on
+     * @see https://github.com/zendframework/zend-mail/pull/187
+     */
+    public function testMimeDecodeBreakageBug()
+    {
+        $headerValue = "v=1; a=rsa-sha25; c=relaxed/simple; d=example.org; h=\r\n\tcontent-language:content-type:content-type:in-reply-to";
+        $headers = "DKIM-Signature: {$headerValue}";
+
+        $message = new Storage\Message(array('headers' => $headers, 'content' => 'irrelevant'));
+        $headers = $message->getHeaders();
+        // calling toString will lazy load all headers
+        // and would break DKIM-Signature header access
+        $headers->toString();
+
+        $header = $headers->get('DKIM-Signature');
+        $this->assertEquals('v=1; a=rsa-sha25; c=relaxed/simple; d=example.org; h= content-language:content-type:content-type:in-reply-to', $header->getFieldValue());
     }
 
     /**
