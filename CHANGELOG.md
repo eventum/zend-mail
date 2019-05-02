@@ -2,6 +2,30 @@
 
 All notable changes to this project will be documented in this file, in reverse chronological order by release.
 
+## 2.10.1 - TBD
+
+### Added
+
+- Nothing.
+
+### Changed
+
+- Nothing.
+
+### Deprecated
+
+- Nothing.
+
+### Removed
+
+- Nothing.
+
+### Fixed
+
+- [#226](https://github.com/zendframework/zend-mail/pull/226) fixes how `Zend\Mail\Header\ListParser::parse()` parses the string if a different quote delimiter
+  is found when already in quote as desbrided in [#222](https://github.com/zendframework/zend-mail/issues/222). Merges test from
+  [#224](https://github.com/zendframework/zend-mail/pull/224).
+
 ## 2.10.0 - 2018-06-07
 
 ### Added
