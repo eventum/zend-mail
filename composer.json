@@ -51,6 +51,7 @@
     "extra": {
         "branch-alias": {
             "dev-master": "2.10.x-dev",
+            "dev-develop-2.10": "2.10.x-dev",
             "dev-develop": "2.11.x-dev"
         },
         "zf": {
